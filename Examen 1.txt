@@ -1,0 +1,60 @@
+#######################################################################################################################################
+# Teoría
+
+1. B
+#--------------------------------------------------------------------------------------------------------------------------------------
+
+2. A
+#--------------------------------------------------------------------------------------------------------------------------------------
+
+3. Primera forma normal
+#--------------------------------------------------------------------------------------------------------------------------------------
+
+4. Ambos tanto WHERE como HAVING hacen filtros, pero HAVING lo hace sobre grupos de registros y se utiliza después de GROUP BY y WHERE solo sobre registros individuales y no se puede utilizar con funciones de agregación
+#--------------------------------------------------------------------------------------------------------------------------------------
+
+5.C
+
+#######################################################################################################################################
+# Práctica
+
+1.SQL
+
+SELECT 
+	nombre_materia,
+	avg(calificacion) as promedio_calificacion
+FROM
+	calificaciones
+WHERE
+	calificacion is not null 
+GROUP BY
+	nombre_materia
+ORDER BY
+	promedio_calificacion DESC;
+
+2.SQL
+
+SELECT 
+	DISTINCT a.nombre,
+	a.apellido
+FROM
+	alumnos as a
+INNER JOIN
+	calificaciones as c
+USING(expediente)
+ORDER BY
+	a.apellido;
+
+3.SQL
+
+SELECT 
+    a.nombre,
+    a.apellido,
+    MAX(c.calificacion) AS calificacion_maxima
+FROM 
+    alumnos a
+INNER JOIN calificaciones c ON a.expediente = c.expediente
+WHERE 
+    c.calificacion IS NOT NULL
+GROUP BY 
+    a.expediente, a.nombre, a.apellido;
